@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity // Pojo class'ını entity yapabilmek için
 public class Author {
 
     @Id
@@ -14,7 +14,6 @@ public class Author {
     private String lastName;
 
     @ManyToMany(mappedBy = "authors")
-
     private Set<Book> books = new HashSet<>();
 
 
@@ -22,10 +21,9 @@ public class Author {
 
     } // Default constructor
 
-    public Author(String firstName, String lastName, Set<Book> Books) {
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.books = Books;
     }
 
     public Long getId() {
@@ -57,6 +55,31 @@ public class Author {
     }
 
     public void setBooks(Set<Book> Books) {
-        this.books = Books;
+        this.books = books;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Author author = (Author) o;
+
+        return id != null ? id.equals(author.id) : author.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                '}';
     }
 }
